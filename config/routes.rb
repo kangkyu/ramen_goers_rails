@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  root "pages#home"
-
   get "home", to: "pages#home"
 
   resources :restaurants, only: [:index, :show] do
@@ -21,4 +19,6 @@ Rails.application.routes.draw do
   delete "logout", to: "sessions#destroy"
 
   get "my_visits", to: "visits#index"
+
+  root "pages#home"
 end

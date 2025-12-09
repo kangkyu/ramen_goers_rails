@@ -13,8 +13,9 @@ class VisitsController < ApplicationController
   end
 
   def create
+    @restaurant = Restaurant.find(params[:restaurant_id])
     @visit = current_user.visits.build(visit_params)
-    @restaurant = @visit.restaurant
+    @visit.restaurant = @restaurant
 
     if @visit.save
       respond_to do |format|
@@ -38,6 +39,6 @@ class VisitsController < ApplicationController
   private
 
   def visit_params
-    params.require(:visit).permit(:restaurant_id, :visit_date, :notes)
+    params.require(:visit).permit(:visit_date, :notes)
   end
 end

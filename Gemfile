@@ -6,6 +6,7 @@ ruby "3.3.10"
 gem "rails", "~> 8.1.0"
 gem "pg", "~> 1.5"
 gem "puma", "~> 6.0"
+gem "bootsnap", require: false
 gem "importmap-rails"
 gem "turbo-rails"
 gem "stimulus-rails"

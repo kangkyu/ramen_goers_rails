@@ -1,3 +1,5 @@
+require "ostruct"
+
 class RankingsController < ApplicationController
   def index
     @rankings = Restaurant.by_visits.map.with_index do |restaurant, index|

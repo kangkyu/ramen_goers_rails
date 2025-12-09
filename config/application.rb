@@ -1,6 +1,8 @@
 require_relative "boot"
 
 require "rails"
+# Require the gems listed in Gemfile, including importmap-rails
+Bundler.require(*Rails.groups)
 require "active_model/railtie"
 require "active_job/railtie"
 require "active_record/railtie"
