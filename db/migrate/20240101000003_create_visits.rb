@@ -8,7 +8,7 @@ class CreateVisits < ActiveRecord::Migration[8.1]
 
       t.timestamps
     end
-    
+
     add_index :visits, [:user_id, :restaurant_id]
   end
 end

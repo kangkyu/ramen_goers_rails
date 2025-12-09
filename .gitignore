@@ -49,3 +49,7 @@
 
 # Node modules (if using Node in the Rails project)
 node_modules/
+
+# Ignore key files for decrypting credentials and more.
+/config/*.key
+

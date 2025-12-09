@@ -1,6 +1,6 @@
 class VisitsController < ApplicationController
   before_action :require_login
-  
+
   def index
     @visit_stats = current_user.visits.includes(:restaurant).group_by(&:restaurant).map do |restaurant, visits|
       {
@@ -11,11 +11,11 @@ class VisitsController < ApplicationController
       }
     end.sort_by { |stat| -stat[:visit_count] }
   end
-  
+
   def create
     @visit = current_user.visits.build(visit_params)
     @restaurant = @visit.restaurant
-    
+
     if @visit.save
       respond_to do |format|
         format.turbo_stream
@@ -28,15 +28,15 @@ class VisitsController < ApplicationController
       end
     end
   end
-  
+
   def destroy
     @visit = current_user.visits.find(params[:id])
     @visit.destroy
     redirect_to my_visits_path, notice: "Visit deleted"
   end
-  
+
   private
-  
+
   def visit_params
     params.require(:visit).permit(:restaurant_id, :visit_date, :notes)
   end

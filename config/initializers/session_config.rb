@@ -1,6 +1,5 @@
-Rails.application.config.session_store :cookie_store, {
+Rails.application.config.session_store :cookie_store,
   key: "_ramen_app_session",
   secure: Rails.env.production?,
   httponly: true,
   same_site: :lax
-}
