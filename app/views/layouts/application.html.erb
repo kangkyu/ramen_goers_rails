@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Ramen App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body>
+    <nav class="navbar">
+      <div class="navbar-container">
+        <a href="<%= root_path %>" class="navbar-brand">🍜 Ramen Tracker</a>
+        
+        <div class="navbar-links">
+          <a href="<%= root_path %>" class="nav-link">Home</a>
+          <% if logged_in? %>
+            <a href="<%= my_visits_path %>" class="nav-link">My Visits</a>
+            <a href="<%= rankings_path %>" class="nav-link">Top Rankings</a>
+            <div class="navbar-user">
+              <span class="user-name"><%= current_user.name %></span>
+              <%= button_to "Sign out", logout_path, method: :delete, class: "btn btn-secondary" %>
+            </div>
+          <% else %>
+            <a href="<%= rankings_path %>" class="nav-link">Top Rankings</a>
+            <a href="<%= login_path %>" class="nav-link">Sign in</a>
+          <% end %>
+        </div>
+      </div>
+    </nav>
+
+    <main class="main-container">
+      <% if notice.present? %>
+        <div class="alert alert-success">
+          <%= notice %>
+        </div>
+      <% end %>
+      
+      <% if alert.present? %>
+        <div class="alert alert-error">
+          <%= alert %>
+        </div>
+      <% end %>
+      
+      <%= yield %>
+    </main>
+
+    <footer class="footer">
+      <p>&copy; 2024 Ramen Tracker. Built with Rails and Hotwire.</p>
+    </footer>
+  </body>
+</html>

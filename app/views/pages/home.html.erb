@@ -1,0 +1,95 @@
+<div class="hero-section">
+  <div class="hero-content">
+    <h1>Track Your Ramen Journey</h1>
+    <p>Discover amazing ramen restaurants, check in to your favorites, and see what's trending in the ramen community.</p>
+  </div>
+
+  <div class="feature-grid">
+    <div class="feature-card">
+      <span class="feature-icon">📍</span>
+      <h3>Check In</h3>
+      <p>Record your visits to track your ramen journey</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">📈</span>
+      <h3>Track Stats</h3>
+      <p>See your visit counts and favorite spots</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">👥</span>
+      <h3>Community</h3>
+      <p>Discover the most popular ramen spots</p>
+    </div>
+  </div>
+</div>
+
+<% if @top_rankings.present? %>
+  <section class="rankings-preview">
+    <div class="section-header">
+      <h2>🏆 Top Ramen Spots</h2>
+      <p>Most visited restaurants this month</p>
+      <a href="<%= rankings_path %>" class="btn btn-outline">View All Rankings</a>
+    </div>
+
+    <div class="restaurant-grid">
+      <% @top_rankings.each_with_index do |restaurant, index| %>
+        <div class="restaurant-card">
+          <div class="card-image">
+            <% if restaurant.image.present? %>
+              <img src="<%= restaurant.image %>" alt="<%= restaurant.name %>">
+            <% else %>
+              <div class="placeholder-image"></div>
+            <% end %>
+            <span class="rank-badge rank-<%= index + 1 %>"><%= index + 1 %></span>
+          </div>
+          
+          <div class="card-content">
+            <h3><%= restaurant.name %></h3>
+            <p class="address"><%= restaurant.address %></p>
+            <div class="stats">
+              <span>✓ <%= restaurant.total_visits %> visits</span>
+              <span>👥 <%= restaurant.unique_visitors %> users</span>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </section>
+<% end %>
+
+<section class="checkin-section">
+  <h2>🍜 Check In to a Restaurant</h2>
+  
+  <% if logged_in? %>
+    <div class="restaurant-grid">
+      <% @restaurants.each do |restaurant| %>
+        <div class="restaurant-card">
+          <div class="card-image">
+            <% if restaurant.image.present? %>
+              <img src="<%= restaurant.image %>" alt="<%= restaurant.name %>">
+            <% else %>
+              <div class="placeholder-image"></div>
+            <% end %>
+          </div>
+          
+          <div class="card-content">
+            <h3><%= restaurant.name %></h3>
+            <p class="address"><%= restaurant.address %></p>
+            <% if restaurant.cuisine.present? %>
+              <span class="badge"><%= restaurant.cuisine %></span>
+            <% end %>
+            
+            <a href="<%= restaurant_path(restaurant) %>" class="btn btn-primary">
+              ✓ Check In
+            </a>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="login-prompt">
+      <p>Sign in to start tracking your ramen journey</p>
+      <a href="<%= login_path %>" class="btn btn-primary">Sign In</a>
+    </div>
+  <% end %>
+</section>
