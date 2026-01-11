@@ -12,7 +12,7 @@ gem "turbo-rails"
 gem "stimulus-rails"
 gem "jbuilder"
 gem "redis", "~> 5.0"
-gem "bcrypt", "~> 3.1.7"
+gem "bcrypt", "~> 3.1.21"
 gem "image_processing", "~> 1.2"
 gem "tailwindcss-rails"
 gem "aws-sdk-s3", require: false
