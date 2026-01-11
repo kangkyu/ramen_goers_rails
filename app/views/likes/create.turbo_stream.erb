@@ -1,9 +1,0 @@
-<%= turbo_stream.replace "like-button-#{@restaurant.id}" do %>
-  <div id="like-button-<%= @restaurant.id %>" class="mb-5">
-    <%= render "likes/button", restaurant: @restaurant %>
-  </div>
-<% end %>
-
-<%= turbo_stream.replace "like-count-#{@restaurant.id}" do %>
-  <span class="stat-number" id="like-count-<%= @restaurant.id %>"><%= @restaurant.like_count %></span>
-<% end %>

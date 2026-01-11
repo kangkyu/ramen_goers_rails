@@ -3,7 +3,6 @@ Rails.application.routes.draw do
 
   resources :restaurants, only: [:index, :show] do
     resources :visits, only: [:create]
-    resource :like, only: [:create, :destroy]
   end
 
   resources :visits, only: [:index, :destroy]
