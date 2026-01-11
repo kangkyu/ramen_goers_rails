@@ -1,202 +1,65 @@
-<div class="restaurant-detail">
-  <div class="restaurant-header">
+<div class="max-w-3xl mx-auto p-5">
+  <div class="mb-8 rounded-lg overflow-hidden">
     <% if @restaurant.image.present? %>
-      <img src="<%= @restaurant.image %>" alt="<%= @restaurant.name %>" class="restaurant-image">
+      <img src="<%= @restaurant.image %>" alt="<%= @restaurant.name %>" class="w-full h-[400px] object-cover">
     <% else %>
-      <div class="placeholder-image-large"></div>
+      <div class="w-full h-[400px] bg-gradient-to-br from-purple-500 to-purple-700 flex items-center justify-center text-white text-5xl"></div>
     <% end %>
   </div>
 
-  <div class="restaurant-info">
-    <h1><%= @restaurant.name %></h1>
-    
-    <div class="restaurant-meta">
-      <span class="meta-item">
+  <div class="bg-white p-8 rounded-lg shadow-md">
+    <h1 class="text-3xl mb-4"><%= @restaurant.name %></h1>
+
+    <div class="flex gap-4 mb-5 flex-wrap">
+      <span class="text-gray-600">
         📍 <%= @restaurant.address %>
       </span>
       <% if @restaurant.cuisine.present? %>
-        <span class="meta-item badge"><%= @restaurant.cuisine %></span>
+        <span class="inline-block bg-gray-100 py-1 px-2.5 rounded text-sm"><%= @restaurant.cuisine %></span>
       <% end %>
     </div>
 
-    <div class="restaurant-stats">
-      <div class="stat">
-        <span class="stat-number"><%= @restaurant.total_visits %></span>
-        <span class="stat-label">Total Visits</span>
+    <div class="flex gap-8 mb-8 p-5 bg-gray-50 rounded-lg">
+      <div class="flex flex-col items-center">
+        <span class="text-3xl font-bold text-purple-600"><%= @restaurant.total_visits %></span>
+        <span class="text-xs text-gray-600 uppercase">Total Visits</span>
       </div>
-      <div class="stat">
-        <span class="stat-number"><%= @restaurant.unique_visitors %></span>
-        <span class="stat-label">Unique Visitors</span>
+      <div class="flex flex-col items-center">
+        <span class="text-3xl font-bold text-purple-600"><%= @restaurant.unique_visitors %></span>
+        <span class="text-xs text-gray-600 uppercase">Unique Visitors</span>
       </div>
     </div>
 
     <% if logged_in? %>
-      <div class="checkin-form-container">
-        <h2>Check in to <%= @restaurant.name %></h2>
-        
-        <%= form_with model: [@restaurant, @visit], local: true, class: "checkin-form" do |form| %>
-          <div class="form-group">
-            <%= form.label :visit_date, "Visit date" %>
-            <%= form.datetime_select :visit_date, { 
+      <div class="mt-8 pt-8 border-t border-gray-200">
+        <h2 class="text-xl mb-5">Check in to <%= @restaurant.name %></h2>
+
+        <%= form_with model: [@restaurant, @visit], local: true, class: "flex flex-col gap-5" do |form| %>
+          <div class="flex flex-col gap-2">
+            <%= form.label :visit_date, "Visit date", class: "font-medium text-sm" %>
+            <%= form.datetime_select :visit_date, {
               default: Time.current,
-              use_month_numbers: true 
-            }, class: "form-input" %>
+              use_month_numbers: true
+            }, class: "py-2.5 px-3 border border-gray-300 rounded text-sm" %>
           </div>
 
-          <div class="form-group">
-            <%= form.label :notes, "Notes (optional)" %>
-            <%= form.text_area :notes, placeholder: "How was the ramen? Any recommendations?", class: "form-textarea" %>
+          <div class="flex flex-col gap-2">
+            <%= form.label :notes, "Notes (optional)", class: "font-medium text-sm" %>
+            <%= form.text_area :notes, placeholder: "How was the ramen? Any recommendations?", class: "py-2.5 px-3 border border-gray-300 rounded text-sm font-sans resize-y min-h-[100px]" %>
           </div>
 
-          <%= form.submit "Check In", class: "btn btn-primary" %>
+          <%= form.submit "Check In", class: "inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded text-sm font-medium bg-gradient-to-br from-purple-500 to-purple-700 text-white hover:-translate-y-0.5 hover:shadow-lg transition-all cursor-pointer" %>
         <% end %>
       </div>
     <% else %>
-      <div class="login-prompt">
-        <p>Sign in to check in to this restaurant</p>
-        <a href="<%= login_path %>" class="btn btn-primary">Sign In</a>
+      <div class="mt-8 p-5 bg-gray-50 rounded-lg text-center">
+        <p class="mb-4">Sign in to check in to this restaurant</p>
+        <a href="<%= login_path %>" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded text-sm font-medium bg-gradient-to-br from-purple-500 to-purple-700 text-white hover:-translate-y-0.5 hover:shadow-lg transition-all">Sign In</a>
       </div>
     <% end %>
   </div>
 </div>
 
-<div class="navigation">
-  <a href="<%= root_path %>" class="btn btn-outline">← Back to Home</a>
+<div class="mt-8 text-center">
+  <a href="<%= root_path %>" class="inline-flex items-center justify-center px-5 py-2.5 rounded text-sm font-medium border-2 border-purple-500 text-purple-500 hover:bg-purple-500 hover:text-white transition-all">← Back to Home</a>
 </div>
-
-<style>
-  .restaurant-detail {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-
-  .restaurant-header {
-    margin-bottom: 30px;
-    border-radius: 8px;
-    overflow: hidden;
-  }
-
-  .restaurant-image {
-    width: 100%;
-    height: 400px;
-    object-fit: cover;
-  }
-
-  .placeholder-image-large {
-    width: 100%;
-    height: 400px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 48px;
-  }
-
-  .restaurant-info {
-    background: white;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  }
-
-  .restaurant-info h1 {
-    margin-bottom: 15px;
-    font-size: 32px;
-  }
-
-  .restaurant-meta {
-    display: flex;
-    gap: 15px;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-  }
-
-  .meta-item {
-    font-size: 16px;
-    color: #666;
-  }
-
-  .restaurant-stats {
-    display: flex;
-    gap: 30px;
-    margin-bottom: 30px;
-    padding: 20px;
-    background: #f8f9fa;
-    border-radius: 8px;
-  }
-
-  .stat {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .stat-number {
-    font-size: 28px;
-    font-weight: bold;
-    color: #667eea;
-  }
-
-  .stat-label {
-    font-size: 12px;
-    color: #666;
-    text-transform: uppercase;
-  }
-
-  .checkin-form-container {
-    margin-top: 30px;
-    padding-top: 30px;
-    border-top: 1px solid #eee;
-  }
-
-  .checkin-form-container h2 {
-    margin-bottom: 20px;
-    font-size: 20px;
-  }
-
-  .checkin-form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  .form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .form-group label {
-    font-weight: 500;
-    font-size: 14px;
-  }
-
-  .form-input,
-  .form-textarea {
-    padding: 10px 12px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 14px;
-    font-family: inherit;
-  }
-
-  .form-textarea {
-    resize: vertical;
-    min-height: 100px;
-  }
-
-  .login-prompt {
-    margin-top: 30px;
-    padding: 20px;
-    background: #f8f9fa;
-    border-radius: 8px;
-    text-align: center;
-  }
-
-  .navigation {
-    margin-top: 30px;
-    text-align: center;
-  }
-</style>
