@@ -28,7 +28,17 @@
         <span class="stat-number"><%= @restaurant.unique_visitors %></span>
         <span class="stat-label">Unique Visitors</span>
       </div>
+      <div class="stat">
+        <span class="stat-number" id="like-count-<%= @restaurant.id %>"><%= @restaurant.like_count %></span>
+        <span class="stat-label">Likes</span>
+      </div>
     </div>
+
+    <% if logged_in? %>
+      <div id="like-button-<%= @restaurant.id %>" class="mb-5">
+        <%= render "likes/button", restaurant: @restaurant %>
+      </div>
+    <% end %>
 
     <% if logged_in? %>
       <div class="checkin-form-container">

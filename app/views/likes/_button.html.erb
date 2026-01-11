@@ -1,0 +1,9 @@
+<% if current_user.likes?(restaurant) %>
+  <%= button_to restaurant_like_path(restaurant), method: :delete, class: "inline-flex items-center gap-2 px-5 py-2.5 border-2 border-indigo-500 rounded-full bg-indigo-500 text-white text-base cursor-pointer transition-all duration-200 hover:bg-indigo-600" do %>
+    ❤️ Liked
+  <% end %>
+<% else %>
+  <%= button_to restaurant_like_path(restaurant), method: :post, class: "inline-flex items-center gap-2 px-5 py-2.5 border-2 border-indigo-500 rounded-full bg-white text-indigo-500 text-base cursor-pointer transition-all duration-200 hover:bg-indigo-50" do %>
+    🤍 Like
+  <% end %>
+<% end %>
